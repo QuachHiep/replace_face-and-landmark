@@ -1,0 +1,6 @@
+image_INF/
+image_source/
+out_landmarks/
+output_results/
+
+*.json
