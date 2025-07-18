@@ -21,10 +21,10 @@ HRNET_WEIGHTS = 'hrnetv2_pretrained/HR18-300W.pth'
 YOLO_WEIGHTS = 'yolov8-face/weights/yolov11l-face.pt'
 SIZE = (256, 256)
 CONF_THRESH = 0.7
-IMAGE_EXT = ('.jpg', '.jpeg', '.png')
+IMAGE_EXT = ('.jpg', '.jpeg', '.png', '.webp', '.bmp')
 
 # TỰ ĐIỀU KHIỂN Ở ĐÂY
-INPUT_DIR = r'D:\DeepLearning\Learning\Do research\replace_face\data_test\241119_IN'
+INPUT_DIR = r'D:\DeepLearning\Learning\Do research\replace_face\data_test\241119_2'
 SOURCE_FOLDER = r'D:\DeepLearning\Learning\Do research\replace_face\face2face_project\replace_face\image_source'
 OUT_DIR = 'out_landmarks'
 FLAT_MODE = True  # True = ảnh nằm trong thư mục chính, False = có thư mục con
@@ -80,10 +80,11 @@ def process_image(path, yolo, model, device, out_path, f2f, source_paths, collec
             out = model(tensor.to(device))
         preds, _ = get_final_preds(out.cpu(), torch.tensor([center]), torch.tensor([scale]))
         landmarks = preds[0].tolist()
-        for x, y in landmarks:
-            cv2.circle(img, (int(x), int(y)), 3, (0, 0, 0), -1)
-            cv2.circle(img, (int(x), int(y)), 2, (0, 255, 255), -1)
-            total += 1
+        # for x, y in landmarks:
+        #     cv2.circle(img, (int(x), int(y)), 3, (0, 0, 0), -1)
+        #     cv2.circle(img, (int(x), int(y)), 2, (0, 255, 255), -1)
+        #     total += 1
+        total += len(landmarks)
         landmark_data.append({
             "box": [int(i) for i in box],
             "score": float(conf),
@@ -92,8 +93,8 @@ def process_image(path, yolo, model, device, out_path, f2f, source_paths, collec
 
     elapsed = time.time() - t0
     os.makedirs(os.path.dirname(out_path), exist_ok=True)
-    cv2.putText(img, f"{total} pts | {elapsed:.2f}s", (10, 25),
-                cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 255), 2)
+    # cv2.putText(img, f"{total} pts | {elapsed:.2f}s", (10, 25),
+    #             cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 255), 2)
     cv2.imwrite(out_path, img)
 
     if collect_results is not None:

@@ -8,7 +8,7 @@ from face2face import Face2Face
 # ==============================================================================
 
 source_folder = r"D:\DeepLearning\Learning\Do research\replace_face\face2face_project\replace_face\image_source"
-input_folder = r"D:\DeepLearning\Learning\Do research\replace_face\data_test\20230707"
+input_folder = r"D:\DeepLearning\Learning\Do research\replace_face\data_test\20230707_2"
 output_folder = "output_results"
 image_extensions = ('.png', '.jpg', '.jpeg', '.bmp', '.webp')
 
